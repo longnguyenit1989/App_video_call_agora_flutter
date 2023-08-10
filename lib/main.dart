@@ -8,7 +8,7 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 const String appId = "345d473414f24a31bb7ff63970390784";
 String channelName = "My_test_channel";
 String token =
-    "007eJxTYFj2e3u2dpdsw++wqt1X3nFNWeD3J1XMreXxvxa3IsG6DVYKDMYmpikm5sYmhiZpRiaJxoZJSeZpaWbGluYGxpYG5hYmlYyXUhoCGRlSxA8wMzJAIIjPz+BbGV+SWlwSn5yRmJeXmsPAAAD4xCOa";
+    "007eJxTYGCf4xeyY42Yl8Hf7bM+8Z4Rn2D9TGd/7F3e30qfHvn8vfldgcHYxDTFxNzYxNAkzcgk0dgwKck8Lc3M2NLcwNjSwNzCpHrtlZSGQEaG57arWBgZIBDE52fwrYwvSS0uiU/OSMzLS81hYAAAMNsldA==";
 String appCertificate = "aa153e4eb427480190437bbd3f9939c5";
 
 void main() {
@@ -23,19 +23,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // static const platform = MethodChannel('com.flutter.epic/epic');
-  //
-  // Future<String> getDynamicToken() async{
-  //   String token;
-  //   try {
-  //     token = await platform.invokeMethod('getDynamicToken');
-  //   } catch(e) {
-  //     return '';
-  //   }
-  //
-  //   return token;
-  // }
-
   int uid = 0; // uid of the local user
 
   int? _remoteUid; // uid of the remote user
@@ -113,49 +100,6 @@ class _MyAppState extends State<MyApp> {
       uid: uid,
     );
   }
-
-  // void join() async {
-  //   await agoraEngine.startPreview();
-  //
-  //   final agoraRestfulAPIKey = 'YOUR_AGORA_RESTFUL_API_KEY'; // Replace with your Agora RESTful API key
-  //   final agoraRestfulURL = 'https://api.agora.io/v1/token/rtc/temporary';
-  //
-  //   final response = await http.post(
-  //     Uri.parse(agoraRestfulURL),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Basic $agoraRestfulAPIKey',
-  //     },
-  //     body: json.encode({
-  //       'appID': appId,
-  //       'appCertificate': appCertificate,
-  //       'channelName': channelName,
-  //       'uid': uid.toString(),
-  //       'expirationTimeInSeconds': 3600,
-  //     }),
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     Map<String, dynamic> responseData = json.decode(response.body);
-  //     token = responseData['data']['token']; // Change this to access the correct token
-  //
-  //     // Set channel options including the client role and channel profile
-  //     ChannelMediaOptions options = const ChannelMediaOptions(
-  //       clientRoleType: ClientRoleType.clientRoleBroadcaster,
-  //       channelProfile: ChannelProfileType.channelProfileCommunication,
-  //     );
-  //
-  //     await agoraEngine.joinChannel(
-  //       token: token,
-  //       channelId: channelName,
-  //       options: options,
-  //       uid: uid,
-  //     );
-  //   } else {
-  //     // Handle error if token retrieval fails
-  //     showMessage("Error joining the channel");
-  //   }
-  // }
 
   void leave() {
     setState(() {
