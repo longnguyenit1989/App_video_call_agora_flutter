@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app_video_call_agora_flutter/video_call_ui_kit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -10,6 +11,7 @@ String channelName = "My_test_channel";
 String token =
     "007eJxTYGCf4xeyY42Yl8Hf7bM+8Z4Rn2D9TGd/7F3e30qfHvn8vfldgcHYxDTFxNzYxNAkzcgk0dgwKck8Lc3M2NLcwNjSwNzCpHrtlZSGQEaG57arWBgZIBDE52fwrYwvSS0uiU/OSMzLS81hYAAAMNsldA==";
 String appCertificate = "aa153e4eb427480190437bbd3f9939c5";
+int uid = 0; // uid of the local user
 
 void main() {
   runApp(const MaterialApp(home: MyApp()));
@@ -23,14 +25,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int uid = 0; // uid of the local user
-
   int? _remoteUid; // uid of the remote user
   bool _isJoined = false; // Indicates if the local user has joined the channel
   late RtcEngine agoraEngine; // Agora engine instance
 
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-  GlobalKey<ScaffoldMessengerState>(); // Global key to access the scaffold
+      GlobalKey<ScaffoldMessengerState>(); // Global key to access the scaffold
 
   showMessage(String message) {
     scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
@@ -51,9 +51,7 @@ class _MyAppState extends State<MyApp> {
 
     //create an instance of the Agora engine
     agoraEngine = createAgoraRtcEngine();
-    await agoraEngine.initialize(const RtcEngineContext(
-        appId: appId
-    ));
+    await agoraEngine.initialize(const RtcEngineContext(appId: appId));
 
     await agoraEngine.enableVideo();
 
@@ -61,7 +59,8 @@ class _MyAppState extends State<MyApp> {
     agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-          showMessage("Local user uid:${connection.localUid} joined the channel");
+          showMessage(
+              "Local user uid:${connection.localUid} joined the channel");
           setState(() {
             _isJoined = true;
           });
@@ -83,8 +82,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-
-  void  join() async {
+  void join() async {
     await agoraEngine.startPreview();
 
     // Set channel options including the client role and channel profile
@@ -152,6 +150,12 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ],
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const VideoCallUiKitScreen()));
+                  },
+                  child: const Text('Go to ui kit screen'))
               // Button Row ends
             ],
           )),
